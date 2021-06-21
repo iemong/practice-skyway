@@ -1,13 +1,9 @@
 <template>
-  <h1>This is an Puppet page</h1>
+  <h1>子ページ</h1>
   <section class="video-wrapper">
     <h2>自分のvideo</h2>
     <p>Peer ID: {{ currentPeer.id }}</p>
     <video ref="videoRef" width="400" autoplay muted playsinline></video>
-  </section>
-  <section>
-    <h2>相手のvideo</h2>
-    <video ref="theirRef" width="400" autoplay muted playsinline></video>
   </section>
   <div class="buttons">
     <button @click="initialize">カメラの初期化</button>
@@ -18,16 +14,13 @@
 </template>
 
 <script>
-// import
 import Peer from 'skyway-js';
 import {ref} from "vue";
 
 export default {
   name: 'Puppet',
-  components: {},
   setup() {
     const videoRef = ref(null)
-    const theirRef = ref(null)
     const localStream = ref(null);
     const currentPeer = ref({})
     const theirId = ref('')
@@ -40,9 +33,7 @@ export default {
       });
 
       peer.on('call', mediaConnection => {
-        console.log('hoge',localStream.value)
         mediaConnection.answer(localStream.value);
-        setEventListener(mediaConnection);
       });
     }
 
@@ -60,22 +51,12 @@ export default {
     }
 
     const call = () => {
-      const mediaConnection = currentPeer.value.call(theirId.value, localStream.value);
-      setEventListener(mediaConnection);
-    }
-
-    const setEventListener = mediaConnection => {
-      mediaConnection.on('stream', stream => {
-        const videoElm = theirRef.value
-        videoElm.srcObject = stream;
-        videoElm.play();
-      });
+      currentPeer.value.call(theirId.value, localStream.value);
     }
 
     return {
       currentPeer,
       videoRef,
-      theirRef,
       theirId,
       initialize,
       call
