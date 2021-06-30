@@ -1,5 +1,6 @@
 <template>
   <div class="controller">
+    <p>コントローラーをbluetoothで繋いで、動かしてください</p>
     <div :key="index" v-for="(button, index) in buttons">
       <!-- 対応表の結果が""だったら表示しない   -->
       <p v-if="buttonMapping.get(index)">
