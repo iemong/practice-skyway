@@ -7,29 +7,43 @@ export default {
   name: "SpriteAnimation",
   props: {
     spriteX: {
+      // スプライト画像の横幅
       default: 0,
       type: Number
     },
     spriteY: {
+      // スプライト画像の縦幅
       default: 0,
       type: Number
     },
     num: {
+      // スプライト画像のフレームの枚数
       default: 0,
       type: Number
     },
     fps: {
+      // アニメーションのfps
       default: 0,
       type: Number
     },
     src: {
+      // スプライト画像のパス(保存場所)
       default: '',
       type: String
+    },
+    autoplay: {
+      default: false,
+      type: Boolean
+    },
+    isStart: {
+      // 親要素からの開始の信号をもらう
+      default: false,
+      type: Boolean
     }
   },
   data() {
     return {
-      context: null, //canvas.getContext("2d")
+      context: null,
       sprite: new Image(),
     }
   },
@@ -41,7 +55,7 @@ export default {
   async mounted() {
     await this.init()
     this.context = this.$refs.canvas.getContext('2d')
-    this.play()
+    this.autoplay && this.play()
   },
   methods: {
     init() {
@@ -77,8 +91,9 @@ export default {
             ((lastTime - startTime) / (1000 / this.fps)) % (this.num + 1)
         );
         if (prevFrame > frame && !repeat) {
-          console.log("loop!!!");
+          console.log("finish!!!");
           window.cancelAnimationFrame(id);
+          this.$emit("onFinish")
           return;
         } else {
           id = window.requestAnimationFrame(loop);
@@ -88,8 +103,14 @@ export default {
       };
 
       loop();
+    },
+  },
+  watch: {
+    isStart: function (value) {
+      if(value) this.play()
     }
   }
+
 }
 </script>
 
