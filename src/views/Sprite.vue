@@ -1,6 +1,12 @@
 <template>
 <div class="root">
-  <SpriteAnimation/>
+  <SpriteAnimation
+      :sprite-x="750"
+      :sprite-y="48530"
+      :num="46"
+      :fps="15"
+      src="/sprite.png"
+  />
 </div>
 
 </template>

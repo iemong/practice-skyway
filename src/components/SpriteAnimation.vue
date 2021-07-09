@@ -5,14 +5,32 @@
 <script>
 export default {
   name: "SpriteAnimation",
+  props: {
+    spriteX: {
+      default: 0,
+      type: Number
+    },
+    spriteY: {
+      default: 0,
+      type: Number
+    },
+    num: {
+      default: 0,
+      type: Number
+    },
+    fps: {
+      default: 0,
+      type: Number
+    },
+    src: {
+      default: '',
+      type: String
+    }
+  },
   data() {
     return {
-      spriteX: 750,
-      spriteY: 48530,
-      num: 46,
       context: null, //canvas.getContext("2d")
       sprite: new Image(),
-      fps: 15
     }
   },
   computed: {
@@ -31,7 +49,7 @@ export default {
         this.sprite.onload = () => {
           resolve();
         };
-        this.sprite.src = "/sprite.png";
+        this.sprite.src = this.src;
       });
     },
     drawSprite(index) {
