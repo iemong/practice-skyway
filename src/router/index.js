@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Master from '@/views/Master.vue'
 import AFrame from "@/views/AFrame";
 import Controller from "@/views/Controller";
+import Sprite from "@/views/Sprite";
 
 const routes = [
     {
@@ -26,6 +27,11 @@ const routes = [
         path: '/a_frame',
         name: 'AFrame',
         component: AFrame
+    },
+    {
+        path: '/sprite',
+        name: 'Sprite',
+        component: Sprite
     },
 ]
 
